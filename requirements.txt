@@ -1,0 +1,7 @@
+react-dom
+react-markdown
+remark-gfm
+remark-math
+rehype-katex
+katex
+rehype-highlight
