@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchFilesList } from '../utils/fileUtils';
 import { useTheme } from '../context/ThemeContext';
+import SearchOverlay from './SearchOverlay';
 
 const FileItem = ({ item, onFileSelect, depth = 0, selectedFile }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -46,6 +47,7 @@ const Sidebar = ({ onFileSelect }) => {
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { isDarkMode, toggleTheme } = useTheme();
 
   const handleFileSelect = (filePath) => {
@@ -79,32 +81,54 @@ const Sidebar = ({ onFileSelect }) => {
   }, [selectedFile]);
 
   return (
-    <div className="sidebar w-64 bg-gray-100 dark:bg-gray-800 p-4 h-screen overflow-y-auto">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-gray-800 dark:text-white">Files</h2>
+    <>
+      <div className="sidebar w-64 bg-gray-100 dark:bg-gray-800 p-4 h-screen overflow-y-auto">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-white">Files</h2>
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white"
+          >
+            {isDarkMode ? '🌞' : '🌙'}
+          </button>
+        </div>
+
+        {/* Search Button */}
         <button
-          onClick={toggleTheme}
-          className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white"
+          onClick={() => setIsSearchOpen(true)}
+          className="w-full px-3 py-2 mb-4 rounded-lg border border-gray-200 dark:border-gray-600 
+                   bg-white dark:bg-gray-700 
+                   text-gray-500 dark:text-gray-400
+                   hover:bg-gray-50 dark:hover:bg-gray-600
+                   text-left"
         >
-          {isDarkMode ? '🌞' : '🌙'}
+          Search files...
         </button>
+
+        {error ? (
+          <div className="text-red-500 p-4">Error: {error}</div>
+        ) : (
+          <ul className="space-y-1">
+            {files.map((item) => (
+              <FileItem 
+                key={item.path} 
+                item={item} 
+                onFileSelect={handleFileSelect}
+                selectedFile={selectedFile}
+                className="text-gray-800 dark:text-white"
+              />
+            ))}
+          </ul>
+        )}
       </div>
-      {error ? (
-        <div className="text-red-500 p-4">Error: {error}</div>
-      ) : (
-        <ul className="space-y-1">
-          {files.map((item) => (
-            <FileItem 
-              key={item.path} 
-              item={item} 
-              onFileSelect={handleFileSelect}
-              selectedFile={selectedFile}
-              className="text-gray-800 dark:text-white"
-            />
-          ))}
-        </ul>
-      )}
-    </div>
+
+      <SearchOverlay
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        files={files}
+        onFileSelect={handleFileSelect}
+      />
+    </>
   );
 };
 
