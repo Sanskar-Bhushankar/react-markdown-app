@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchFileContent } from '../utils/fileUtils';
-import MarkdownPage from './MarkdownPage'; // Import the MarkdownPage component
+import MarkdownPage from './MarkdownPage';
 
 const SearchOverlay = ({ isOpen, onClose, files, onFileSelect }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -8,7 +8,6 @@ const SearchOverlay = ({ isOpen, onClose, files, onFileSelect }) => {
   const [selectedPreview, setSelectedPreview] = useState(null);
   const [previewContent, setPreviewContent] = useState('');
 
-  // Reset state when overlay opens
   useEffect(() => {
     if (isOpen) {
       setSearchQuery('');
@@ -18,7 +17,6 @@ const SearchOverlay = ({ isOpen, onClose, files, onFileSelect }) => {
     }
   }, [isOpen]);
 
-  // Filter files including content inside folders
   const filterFiles = (items, query) => {
     let results = [];
     items.forEach(item => {
@@ -33,7 +31,6 @@ const SearchOverlay = ({ isOpen, onClose, files, onFileSelect }) => {
     return results;
   };
 
-  // Handle search input
   useEffect(() => {
     if (searchQuery) {
       const results = filterFiles(files, searchQuery);
@@ -43,8 +40,15 @@ const SearchOverlay = ({ isOpen, onClose, files, onFileSelect }) => {
     }
   }, [searchQuery, files]);
 
-  // Load preview content
-  const loadPreview = async (file) => {
+  const handleFileClick = async (file) => {
+    // If file is already selected and previewed, open it
+    if (selectedPreview?.path === file.path) {
+      onFileSelect(file.path);
+      onClose();
+      return;
+    }
+
+    // Otherwise, load the preview
     try {
       const content = await fetchFileContent(file.path);
       setPreviewContent(content);
@@ -54,7 +58,6 @@ const SearchOverlay = ({ isOpen, onClose, files, onFileSelect }) => {
     }
   };
 
-  // Handle opening the file
   const handleOpenFile = (file) => {
     onFileSelect(file.path);
     onClose();
@@ -98,11 +101,12 @@ const SearchOverlay = ({ isOpen, onClose, files, onFileSelect }) => {
                 {filteredFiles.map((file) => (
                   <button
                     key={file.path}
-                    onClick={() => loadPreview(file)}
+                    onClick={() => handleFileClick(file)}
                     className={`w-full text-left px-3 py-2 rounded-md text-sm mb-1
+                             hover:bg-gray-100 dark:hover:bg-gray-800
                              ${selectedPreview?.path === file.path 
                                ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' 
-                               : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                               : 'text-gray-600 dark:text-gray-300'
                              }`}
                   >
                     {file.name}
@@ -111,7 +115,7 @@ const SearchOverlay = ({ isOpen, onClose, files, onFileSelect }) => {
               </div>
             </div>
 
-            {/* Preview Area - Updated with MarkdownPage */}
+            {/* Preview Area */}
             <div className="flex-1 overflow-y-auto">
               {selectedPreview ? (
                 <div 
@@ -142,4 +146,4 @@ const SearchOverlay = ({ isOpen, onClose, files, onFileSelect }) => {
   );
 };
 
-export default SearchOverlay; 
+export default SearchOverlay;
