@@ -25,6 +25,8 @@ async function listFilesRecursively(dir, baseDir = '') {
   const files = [];
 
   for (const item of items) {
+    if (item === 'images') continue;
+
     const fullPath = path.join(dir, item);
     const relativePath = path.join(baseDir, item);
     const stat = await fs.stat(fullPath);

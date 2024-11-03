@@ -43,3 +43,88 @@ body {
     padding: 2rem;
   }
   
+  /* Add these styles for better table handling */
+  .prose {
+    @apply max-w-none;
+    width: 100%;
+  }
+  
+  /* Table specific styles */
+  .prose table {
+    @apply w-full table-auto border-collapse;
+  }
+  
+  .prose table th,
+  .prose table td {
+    @apply border border-gray-300 dark:border-gray-700 p-2 whitespace-nowrap;
+  }
+  
+  .prose table th {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+  
+  /* Container for tables */
+  .overflow-x-auto {
+    @apply rounded-lg border border-gray-200 dark:border-gray-700;
+    max-width: 100%;
+    margin: 1rem 0;
+  }
+  
+  /* Ensure code blocks don't cause horizontal scroll */
+  .prose pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  
+  /* Ensure images don't cause horizontal scroll */
+  .prose img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Add these styles for the file heading */
+  .container h1:first-child {
+    @apply text-3xl font-bold mb-6 pb-2;
+    @apply border-b border-gray-200 dark:border-gray-700;
+    @apply text-gray-800 dark:text-gray-100;
+  }
+  
+  /* Optional: Add a nice hover effect to show full path */
+  .container h1:first-child:hover::after {
+    content: attr(data-path);
+    @apply block text-sm text-gray-500 dark:text-gray-400 mt-1 font-normal;
+  }
+  
+  /* Add these styles for images */
+  .prose img {
+    @apply max-w-full h-auto rounded-lg shadow-lg;
+    margin: 1.5rem auto;
+  }
+  
+  .prose .image-container {
+    @apply my-4 flex justify-center;
+  }
+  
+  /* Optional: Add hover effect */
+  .prose img:hover {
+    @apply shadow-xl;
+    transform: scale(1.01);
+    transition: all 0.2s ease-in-out;
+  }
+  
+  /* Image styles */
+  .image-container {
+    @apply flex justify-center my-6;
+  }
+  
+  .image-container img {
+    @apply max-w-full h-auto rounded-lg shadow-lg;
+    max-height: 600px; /* Optional: limit maximum image height */
+  }
+  
+  .image-container img:hover {
+    @apply shadow-xl;
+    transform: scale(1.01);
+    transition: all 0.2s ease-in-out;
+  }
+  
