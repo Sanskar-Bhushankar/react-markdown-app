@@ -31,3 +31,15 @@ body {
     text-decoration: underline;
   }
   
+  .sidebar {
+    @apply border-r border-gray-200;
+    min-width: 250px;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .prose {
+    @apply max-w-none;
+    padding: 2rem;
+  }
+  
