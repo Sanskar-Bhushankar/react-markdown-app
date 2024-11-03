@@ -87,6 +87,32 @@ html, body {
   height: 100%;
 }
 
+/* Remove slow transitions for text color */
+* {
+  transition: background-color 0.2s;
+}
+
+/* Instant color changes for text */
+.prose *, 
+.text-gray-900,
+.text-gray-800,
+.text-gray-600,
+.text-white,
+.dark .prose *,
+[class*="text-"] {
+  transition: none !important;
+}
+
+/* Keep smooth transitions only for backgrounds and borders */
+.bg-white,
+.bg-gray-900,
+.bg-gray-100,
+.bg-gray-800,
+[class*="bg-"],
+[class*="border-"] {
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
 /* Ensure content doesn't exceed viewport */
 .prose {
   width: 100%;
