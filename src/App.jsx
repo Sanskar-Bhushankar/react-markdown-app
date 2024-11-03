@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar';
 import MarkdownPage from './components/MarkdownPage';
 import { ThemeProvider } from './context/ThemeContext';
 import { fetchFileContent } from './utils/fileUtils';
+import TableOfContents from './components/TableOfContents';
 
 const App = () => {
   const [markdownContent, setMarkdownContent] = useState('# Select a file from the sidebar');
@@ -22,10 +23,10 @@ const App = () => {
 
   return (
     <ThemeProvider>
-      <div className="flex h-screen overflow-hidden bg-white dark:bg-gray-900 text-gray-800 dark:text-white">
+      <div className="flex h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-white">
         <Sidebar onFileSelect={handleFileSelect} />
-        <main className="flex-1 overflow-auto p-6">
-          <div className="container mx-auto">
+        <main className="flex-1 p-6 overflow-hidden">
+          <div className="container mx-auto h-full overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
             {currentFileName && (
               <div className="mb-4 text-2xl font-bold text-gray-800 dark:text-white">
                 {currentFileName}
@@ -34,6 +35,7 @@ const App = () => {
             <MarkdownPage markdown={markdownContent} />
           </div>
         </main>
+        <TableOfContents markdown={markdownContent} />
       </div>
     </ThemeProvider>
   );

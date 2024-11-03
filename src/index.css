@@ -14,6 +14,7 @@ body {
     max-width: 800px;
     margin: auto;
     padding: 1rem;
+    font-size: 0.95rem;
   }
   
   h1, h2, h3 {
@@ -126,5 +127,169 @@ body {
     @apply shadow-xl;
     transform: scale(1.01);
     transition: all 0.2s ease-in-out;
+  }
+  
+  /* Adjust heading sizes */
+  .prose h1 {
+    font-size: 1.8em;
+    margin-top: 2em;
+  }
+  
+  .prose h2 {
+    font-size: 1.5em;
+    margin-top: 1.75em;
+  }
+  
+  .prose h3 {
+    font-size: 1.25em;
+    margin-top: 1.5em;
+  }
+  
+  /* Table of Contents styles */
+  .toc-nav {
+    position: relative;
+  }
+  
+  .toc-nav::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(209 213 219),
+      transparent
+    );
+  }
+  
+  .toc-nav button {
+    position: relative;
+    border-left: 2px solid transparent;
+  }
+  
+  .toc-nav button:hover {
+    border-left-color: #4B5563;
+  }
+  
+  .toc-nav button:hover::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 50%;
+    width: 3px;
+    height: 3px;
+    background-color: #4B5563;
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* Ensure headings have proper spacing for smooth scrolling */
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    scroll-margin-top: 1rem;
+  }
+  
+  /* Adjust table styles for better readability */
+  .prose table {
+    font-size: 0.9rem;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .prose table th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.75rem;
+  }
+  
+  .dark .prose table th {
+    background-color: #374151;
+  }
+  
+  .prose table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .dark .prose table td {
+    border-bottom: 1px solid #4B5563;
+  }
+  
+  .prose table tr:hover {
+    background-color: #f9fafb;
+  }
+  
+  .dark .prose table tr:hover {
+    background-color: #1F2937;
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  /* Table of Contents styles */
+  .toc-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .toc-nav button {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 4px;
+  }
+  
+  .toc-nav button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+  }
+  
+  /* Remove default button styles */
+  button {
+    text-decoration: none !important;
+  }
+  
+  button:hover {
+    text-decoration: none !important;
+  }
+  
+  /* Smooth scrolling for the whole page */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Custom scrollbar for ToC */
+  .toc-nav::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .toc-nav::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .toc-nav::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 2px;
+  }
+  
+  .dark .toc-nav::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.3);
   }
   
