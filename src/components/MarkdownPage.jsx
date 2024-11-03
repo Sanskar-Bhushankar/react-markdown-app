@@ -1,27 +1,3 @@
-// // src/components/MarkdownPage.jsx
-// import React from 'react';
-// import ReactMarkdown from 'react-markdown';
-// import gfm from 'remark-gfm';
-// import rehypeHighlight from 'rehype-highlight';
-// import rehypeReact from 'rehype-react';
-
-// // Function to read Markdown content from a file (simplified)
-// const MarkdownPage = ({ markdown }) => {
-//   return (
-//     <div className="prose">
-//       <ReactMarkdown
-//         remarkPlugins={[gfm]}
-//         rehypePlugins={[rehypeHighlight]}
-//       >
-//         {markdown}
-//       </ReactMarkdown>
-//     </div>
-//   );
-// };
-
-// export default MarkdownPage;
-
-
 // src/components/MarkdownPage.jsx
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -33,11 +9,33 @@ import rehypeHighlight from 'rehype-highlight';
 
 const MarkdownPage = ({ markdown }) => {
   return (
-    <div className="prose">
+    <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-white">
       <ReactMarkdown
         children={markdown}
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[rehypeKatex, rehypeHighlight]}
+        components={{
+          code({ node, inline, className, children, ...props }) {
+            return (
+              <code
+                className={`${className} bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white`}
+                {...props}
+              >
+                {children}
+              </code>
+            );
+          },
+          pre({ node, children, ...props }) {
+            return (
+              <pre
+                className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"
+                {...props}
+              >
+                {children}
+              </pre>
+            );
+          },
+        }}
       />
     </div>
   );

@@ -87,7 +87,7 @@ This dataset provides detailed information about various features associated wit
 
 ### Consider this sample code
 
-``` python
+``` js
 # Function to apply the pricing strategies including demand-supply calculation
 
 def apply_pricing_strategy_updated(row,

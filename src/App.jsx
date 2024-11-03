@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import MarkdownPage from './components/MarkdownPage';
+import { ThemeProvider } from './context/ThemeContext';
 import { fetchFileContent } from './utils/fileUtils';
 
 const App = () => {
@@ -16,12 +17,14 @@ const App = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
-      <Sidebar onFileSelect={handleFileSelect} />
-      <main className="flex-1 p-6 overflow-auto">
-        <MarkdownPage markdown={markdownContent} />
-      </main>
-    </div>
+    <ThemeProvider>
+      <div className="flex min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-white">
+        <Sidebar onFileSelect={handleFileSelect} />
+        <main className="flex-1 p-6 overflow-auto dark:bg-gray-900">
+          <MarkdownPage markdown={markdownContent} />
+        </main>
+      </div>
+    </ThemeProvider>
   );
 };
 
