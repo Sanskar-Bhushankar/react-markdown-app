@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { fetchFilesList } from '../utils/fileUtils';
 import { useTheme } from '../context/ThemeContext';
 
-const FileItem = ({ item, onFileSelect, depth = 0 }) => {
+const FileItem = ({ item, onFileSelect, depth = 0, selectedFile }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const isSelected = selectedFile === item.path;
 
   const handleClick = () => {
     if (item.isDirectory) {
@@ -16,12 +17,13 @@ const FileItem = ({ item, onFileSelect, depth = 0 }) => {
   return (
     <li>
       <div
-        className="cursor-pointer hover:bg-gray-200 p-2 rounded flex items-center space-x-2"
+        className={`cursor-pointer p-2 rounded flex items-center space-x-2 transition-colors duration-200
+          ${isSelected ? 'bg-blue-100 dark:bg-blue-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700'}`}
         style={{ paddingLeft: `${depth * 1.5}rem` }}
         onClick={handleClick}
       >
         <span>{item.isDirectory ? (isExpanded ? '📂' : '📁') : '📄'}</span>
-        <span>{item.name}</span>
+        <span className="truncate">{item.name}</span>
       </div>
       {item.isDirectory && isExpanded && (
         <ul className="ml-4">
@@ -31,6 +33,7 @@ const FileItem = ({ item, onFileSelect, depth = 0 }) => {
               item={child}
               onFileSelect={onFileSelect}
               depth={depth + 1}
+              selectedFile={selectedFile}
             />
           ))}
         </ul>
@@ -42,7 +45,13 @@ const FileItem = ({ item, onFileSelect, depth = 0 }) => {
 const Sidebar = ({ onFileSelect }) => {
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const { isDarkMode, toggleTheme } = useTheme();
+
+  const handleFileSelect = (filePath) => {
+    setSelectedFile(filePath);
+    onFileSelect(filePath);
+  };
 
   const refreshFiles = async () => {
     try {
@@ -58,6 +67,16 @@ const Sidebar = ({ onFileSelect }) => {
     const interval = setInterval(refreshFiles, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  // Auto-expand parent folders of selected file
+  useEffect(() => {
+    if (selectedFile) {
+      const pathParts = selectedFile.split('/');
+      // Remove the file name to get parent folders
+      pathParts.pop();
+      // TODO: Implement folder expansion logic if needed
+    }
+  }, [selectedFile]);
 
   return (
     <div className="sidebar w-64 bg-gray-100 dark:bg-gray-800 p-4 h-screen overflow-y-auto">
@@ -78,7 +97,8 @@ const Sidebar = ({ onFileSelect }) => {
             <FileItem 
               key={item.path} 
               item={item} 
-              onFileSelect={onFileSelect}
+              onFileSelect={handleFileSelect}
+              selectedFile={selectedFile}
               className="text-gray-800 dark:text-white"
             />
           ))}
