@@ -1,1 +1,1 @@
-toggle button added and done the text color accordingly
+toggle button added and done the text color accordingly.
