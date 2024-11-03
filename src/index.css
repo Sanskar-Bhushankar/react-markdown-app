@@ -1,295 +1,100 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* index.css */
 
-/* src/index.css */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+/* Base styles */
+@layer base {
+  body {
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
   }
-  
-  .prose {
-    max-width: 800px;
-    margin: auto;
-    padding: 1rem;
-    font-size: 0.95rem;
-  }
-  
-  h1, h2, h3 {
-    color: #333;
-  }
-  
-  button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  button:hover {
-    text-decoration: underline;
-  }
-  
-  .sidebar {
-    @apply border-r border-gray-200;
-    min-width: 250px;
-    height: 100vh;
-    overflow-y: auto;
-  }
-  
-  .prose {
-    @apply max-w-none;
-    padding: 2rem;
-  }
-  
-  /* Add these styles for better table handling */
-  .prose {
-    @apply max-w-none;
-    width: 100%;
-  }
-  
-  /* Table specific styles */
-  .prose table {
-    @apply w-full table-auto border-collapse;
-  }
-  
-  .prose table th,
-  .prose table td {
-    @apply border border-gray-300 dark:border-gray-700 p-2 whitespace-nowrap;
-  }
-  
-  .prose table th {
-    @apply bg-gray-100 dark:bg-gray-800;
-  }
-  
-  /* Container for tables */
-  .overflow-x-auto {
-    @apply rounded-lg border border-gray-200 dark:border-gray-700;
-    max-width: 100%;
-    margin: 1rem 0;
-  }
-  
-  /* Ensure code blocks don't cause horizontal scroll */
-  .prose pre {
-    max-width: 100%;
-    overflow-x: auto;
-  }
-  
-  /* Ensure images don't cause horizontal scroll */
-  .prose img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  /* Add these styles for the file heading */
-  .container h1:first-child {
-    @apply text-3xl font-bold mb-6 pb-2;
-    @apply border-b border-gray-200 dark:border-gray-700;
-    @apply text-gray-800 dark:text-gray-100;
-  }
-  
-  /* Optional: Add a nice hover effect to show full path */
-  .container h1:first-child:hover::after {
-    content: attr(data-path);
-    @apply block text-sm text-gray-500 dark:text-gray-400 mt-1 font-normal;
-  }
-  
-  /* Add these styles for images */
-  .prose img {
-    @apply max-w-full h-auto rounded-lg shadow-lg;
-    margin: 1.5rem auto;
-  }
-  
-  .prose .image-container {
-    @apply my-4 flex justify-center;
-  }
-  
-  /* Optional: Add hover effect */
-  .prose img:hover {
-    @apply shadow-xl;
-    transform: scale(1.01);
-    transition: all 0.2s ease-in-out;
-  }
-  
-  /* Image styles */
-  .image-container {
-    @apply flex justify-center my-6;
-  }
-  
-  .image-container img {
-    @apply max-w-full h-auto rounded-lg shadow-lg;
-    max-height: 600px; /* Optional: limit maximum image height */
-  }
-  
-  .image-container img:hover {
-    @apply shadow-xl;
-    transform: scale(1.01);
-    transition: all 0.2s ease-in-out;
-  }
-  
-  /* Adjust heading sizes */
-  .prose h1 {
-    font-size: 1.8em;
-    margin-top: 2em;
-  }
-  
-  .prose h2 {
-    font-size: 1.5em;
-    margin-top: 1.75em;
-  }
-  
-  .prose h3 {
-    font-size: 1.25em;
-    margin-top: 1.5em;
-  }
-  
-  /* Table of Contents styles */
-  .toc-nav {
-    position: relative;
-  }
-  
-  .toc-nav::before {
-    content: '';
-    position: absolute;
-    left: 4px;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(209 213 219),
-      transparent
-    );
-  }
-  
-  .toc-nav button {
-    position: relative;
-    border-left: 2px solid transparent;
-  }
-  
-  .toc-nav button:hover {
-    border-left-color: #4B5563;
-  }
-  
-  .toc-nav button:hover::before {
-    content: '';
-    position: absolute;
-    left: -1px;
-    top: 50%;
-    width: 3px;
-    height: 3px;
-    background-color: #4B5563;
-    border-radius: 50%;
-    transform: translateY(-50%);
-  }
-  
-  /* Ensure headings have proper spacing for smooth scrolling */
-  .prose h1,
-  .prose h2,
-  .prose h3,
-  .prose h4,
-  .prose h5,
-  .prose h6 {
-    scroll-margin-top: 1rem;
-  }
-  
-  /* Adjust table styles for better readability */
-  .prose table {
-    font-size: 0.9rem;
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  .prose table th {
-    background-color: #f3f4f6;
-    font-weight: 600;
-    text-align: left;
-    padding: 0.75rem;
-  }
-  
-  .dark .prose table th {
-    background-color: #374151;
-  }
-  
-  .prose table td {
-    padding: 0.75rem;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  
-  .dark .prose table td {
-    border-bottom: 1px solid #4B5563;
-  }
-  
-  .prose table tr:hover {
-    background-color: #f9fafb;
-  }
-  
-  .dark .prose table tr:hover {
-    background-color: #1F2937;
-  }
-  
-  /* Hide scrollbar but keep functionality */
-  .container::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .container {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  /* Table of Contents styles */
-  .toc-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  
-  .toc-nav button {
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    border-radius: 4px;
-  }
-  
-  .toc-nav button:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
-  }
-  
-  /* Remove default button styles */
-  button {
-    text-decoration: none !important;
-  }
-  
-  button:hover {
-    text-decoration: none !important;
-  }
-  
-  /* Smooth scrolling for the whole page */
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  /* Custom scrollbar for ToC */
-  .toc-nav::-webkit-scrollbar {
-    width: 4px;
-  }
-  
-  .toc-nav::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  .toc-nav::-webkit-scrollbar-thumb {
-    background-color: rgba(156, 163, 175, 0.5);
-    border-radius: 2px;
-  }
-  
-  .dark .toc-nav::-webkit-scrollbar-thumb {
-    background-color: rgba(156, 163, 175, 0.3);
-  }
+}
+
+/* Custom scrollbar hiding */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Dark mode specific styles */
+.dark .prose {
+  --tw-prose-body: #D1D5DB;
+  --tw-prose-headings: #FFFFFF;
+  --tw-prose-links: #60A5FA;
+  --tw-prose-bold: #FFFFFF;
+  --tw-prose-counters: #9CA3AF;
+  --tw-prose-bullets: #4B5563;
+  --tw-prose-hr: #374151;
+  --tw-prose-quotes: #D1D5DB;
+  --tw-prose-quote-borders: #374151;
+  --tw-prose-captions: #9CA3AF;
+  --tw-prose-code: #FFFFFF;
+  --tw-prose-pre-code: #D1D5DB;
+  --tw-prose-pre-bg: #1F2937;
+  --tw-prose-th-borders: #4B5563;
+  --tw-prose-td-borders: #374151;
+}
+
+/* Smooth theme transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Prose overrides */
+.prose pre {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+.prose code {
+  @apply bg-gray-100 dark:bg-gray-800 dark:text-white px-1 py-0.5 rounded;
+}
+
+.prose img {
+  @apply rounded-lg shadow-md;
+}
+
+.prose table {
+  @apply border-collapse border border-gray-200 dark:border-gray-700;
+}
+
+.prose td,
+.prose th {
+  @apply border border-gray-200 dark:border-gray-700 p-2;
+}
+
+.prose th {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+.prose tr:nth-child(even) {
+  @apply bg-gray-50 dark:bg-gray-800/50;
+}
+
+/* Reset body and html height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+}
+
+/* Ensure content doesn't exceed viewport */
+.prose {
+  width: 100%;
+  max-width: none;
+}
+
+/* Prevent content overflow */
+.overflow-hidden {
+  overflow: hidden;
+}
   

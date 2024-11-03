@@ -23,16 +23,20 @@ const App = () => {
 
   return (
     <ThemeProvider>
-      <div className="flex h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-white">
+      <div className="h-screen flex overflow-hidden bg-white dark:bg-gray-900">
         <Sidebar onFileSelect={handleFileSelect} />
-        <main className="flex-1 p-6 overflow-hidden">
-          <div className="container mx-auto h-full overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
-            {currentFileName && (
-              <div className="mb-4 text-2xl font-bold text-gray-800 dark:text-white">
-                {currentFileName}
+        <main className="flex-1 flex flex-col overflow-hidden bg-white dark:bg-gray-900">
+          <div className="flex-1 overflow-auto scrollbar-hide">
+            <div className="p-6">
+              {currentFileName && (
+                <h1 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+                  {currentFileName}
+                </h1>
+              )}
+              <div className="prose dark:prose-invert prose-slate max-w-none">
+                <MarkdownPage markdown={markdownContent} />
               </div>
-            )}
-            <MarkdownPage markdown={markdownContent} />
+            </div>
           </div>
         </main>
         <TableOfContents markdown={markdownContent} />

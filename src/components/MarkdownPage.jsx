@@ -18,7 +18,7 @@ const MarkdownPage = ({ markdown }) => {
   };
 
   return (
-    <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-white">
+    <div className="prose dark:prose-invert max-w-none">
       <ReactMarkdown
         children={processMarkdown(markdown)}
         remarkPlugins={[remarkGfm, remarkMath]}
@@ -56,7 +56,7 @@ const MarkdownPage = ({ markdown }) => {
           code({ node, inline, className, children, ...props }) {
             return (
               <code
-                className={`${className} bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white`}
+                className={`${className} bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200`}
                 {...props}
               >
                 {children}
