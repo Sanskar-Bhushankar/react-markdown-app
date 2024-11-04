@@ -18,4 +18,29 @@ export const fetchFileContent = async (filePath) => {
     console.error('Error loading file:', error);
     throw error;
   }
+};
+
+export const getAllMarkdownFiles = async () => {
+  try {
+    const response = await fetch('/api/sidebar');
+    const data = await response.json();
+    
+    const extractFiles = (items) => {
+      let files = [];
+      items.forEach(item => {
+        if (item.type === 'file' && item.path.endsWith('.md')) {
+          files.push(item.path);
+        }
+        if (item.type === 'directory' && item.children) {
+          files = files.concat(extractFiles(item.children));
+        }
+      });
+      return files;
+    };
+
+    return extractFiles(data);
+  } catch (error) {
+    console.error('Error getting markdown files:', error);
+    return [];
+  }
 }; 

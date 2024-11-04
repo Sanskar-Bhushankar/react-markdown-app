@@ -1,4 +1,9 @@
 
+---
+title: "GIT Tutorial to copy branch"
+date: "2024-01-01"
+---
+
 ##  Step1 : first create a empty folder in desktop and open gitbash in the folder
 
 fir git clone the repo

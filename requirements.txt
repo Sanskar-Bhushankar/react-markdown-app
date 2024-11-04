@@ -5,3 +5,4 @@ remark-math
 rehype-katex
 katex
 rehype-highlight
+gray-matter
