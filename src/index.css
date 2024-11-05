@@ -19,108 +19,21 @@
   display: none;
 }
 
-/* Dark mode specific styles */
-.dark .prose {
-  --tw-prose-body: #D1D5DB;
-  --tw-prose-headings: #FFFFFF;
-  --tw-prose-links: #60A5FA;
-  --tw-prose-bold: #FFFFFF;
-  --tw-prose-counters: #9CA3AF;
-  --tw-prose-bullets: #4B5563;
-  --tw-prose-hr: #374151;
-  --tw-prose-quotes: #D1D5DB;
-  --tw-prose-quote-borders: #374151;
-  --tw-prose-captions: #9CA3AF;
-  --tw-prose-code: #FFFFFF;
-  --tw-prose-pre-code: #D1D5DB;
-  --tw-prose-pre-bg: #1F2937;
-  --tw-prose-th-borders: #4B5563;
-  --tw-prose-td-borders: #374151;
-}
-
-/* Smooth theme transitions */
+/* Remove transition for text colors */
 * {
-  transition-property: background-color, border-color, color, fill, stroke;
-  transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: background-color, border-color;
+  transition-duration: 100ms;
+  transition-timing-function: ease-in-out;
 }
 
-/* Prose overrides */
+/* Add instant color change for text */
+.dark *, * {
+  transition-property: color;
+  transition-duration: 0s;
+}
+
+/* Keep transitions for backgrounds */
 .prose pre {
-  @apply bg-gray-100 dark:bg-gray-800;
-}
-
-.prose code {
-  @apply bg-gray-100 dark:bg-gray-800 dark:text-white px-1 py-0.5 rounded;
-}
-
-.prose img {
-  @apply rounded-lg shadow-md;
-}
-
-.prose table {
-  @apply border-collapse border border-gray-200 dark:border-gray-700;
-}
-
-.prose td,
-.prose th {
-  @apply border border-gray-200 dark:border-gray-700 p-2;
-}
-
-.prose th {
-  @apply bg-gray-100 dark:bg-gray-800;
-}
-
-.prose tr:nth-child(even) {
-  @apply bg-gray-50 dark:bg-gray-800/50;
-}
-
-/* Reset body and html height */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-#root {
-  height: 100%;
-}
-
-/* Remove slow transitions for text color */
-* {
-  transition: background-color 0.2s;
-}
-
-/* Instant color changes for text */
-.prose *, 
-.text-gray-900,
-.text-gray-800,
-.text-gray-600,
-.text-white,
-.dark .prose *,
-[class*="text-"] {
-  transition: none !important;
-}
-
-/* Keep smooth transitions only for backgrounds and borders */
-.bg-white,
-.bg-gray-900,
-.bg-gray-100,
-.bg-gray-800,
-[class*="bg-"],
-[class*="border-"] {
-  transition: background-color 0.2s, border-color 0.2s;
-}
-
-/* Ensure content doesn't exceed viewport */
-.prose {
-  width: 100%;
-  max-width: none;
-}
-
-/* Prevent content overflow */
-.overflow-hidden {
-  overflow: hidden;
+  transition: background-color 100ms ease-in-out;
 }
   

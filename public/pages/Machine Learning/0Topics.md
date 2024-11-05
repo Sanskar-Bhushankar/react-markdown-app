@@ -1,9 +1,6 @@
-
----
-title: "0. Topics"
+```
 date: "2024-11-04"
----
-
+```
 ### **1. Foundations of Machine Learning**
    - Introduction to Machine Learning
    - Types of Machine Learning: Supervised, Unsupervised, Reinforcement
