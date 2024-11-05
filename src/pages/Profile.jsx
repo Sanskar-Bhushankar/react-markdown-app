@@ -3,40 +3,35 @@ import { fetchFilesList, fetchFileContent } from '../utils/fileUtils';
 
 const ContributionGraph = () => {
   const [contributions, setContributions] = useState({});
+  const [fileDetails, setFileDetails] = useState({});
 
   useEffect(() => {
     const fetchContributions = async () => {
       try {
-        // Get all files first
-        const files = await fetchFilesList();
+        const indexContent = await fetchFileContent('index.md');
+        const contributionsMap = {};
+        const filesMap = {};
 
-        const processFiles = async (items) => {
-          for (const item of items) {
-            if (item.isDirectory && item.children) {
-              await processFiles(item.children);
-            } else if (!item.isDirectory && item.path.endsWith('.md')) {
-              try {
-                // Fetch content of each markdown file
-                const content = await fetchFileContent(item.path);
-                
-                // Extract date using regex
-                const dateMatch = content.match(/date:\s*"([^"]+)"/);
-                if (dateMatch && dateMatch[1]) {
-                  const date = dateMatch[1];
-                  setContributions(prev => ({
-                    ...prev,
-                    [date]: (prev[date] || 0) + 1
-                  }));
-                  console.log(`Found contribution for ${date} in ${item.path}`);
-                }
-              } catch (error) {
-                console.error(`Error processing ${item.path}:`, error);
-              }
+        const lines = indexContent.split('\n');
+        lines.forEach(line => {
+          const match = line.match(/\[(.*?)\].*?(\d{1,2}:\d{2} [AP]M) - ([A-Za-z]+ \d{1,2}, \d{4})/);
+          
+          if (match) {
+            const fileName = match[1];
+            const date = new Date(match[3]);
+            const formattedDate = date.toISOString().split('T')[0];
+            
+            contributionsMap[formattedDate] = (contributionsMap[formattedDate] || 0) + 1;
+            
+            if (!filesMap[formattedDate]) {
+              filesMap[formattedDate] = [];
             }
+            filesMap[formattedDate].push(fileName);
           }
-        };
+        });
 
-        await processFiles(files);
+        setContributions(contributionsMap);
+        setFileDetails(filesMap);
       } catch (error) {
         console.error('Error fetching contributions:', error);
       }
@@ -95,6 +90,7 @@ const ContributionGraph = () => {
                   {Array.from({ length: getDaysInMonth(month) }, (_, day) => {
                     const dateKey = getDateString(month, day);
                     const count = contributions[dateKey] || 0;
+                    const files = fileDetails[dateKey] || [];
                     
                     return (
                       <div
@@ -106,14 +102,19 @@ const ContributionGraph = () => {
                           transition-all cursor-pointer relative
                           group
                         `}
-                        title={`${count} contributions on ${dateKey}`}
                       >
-                        {/* Tooltip */}
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 
                                       hidden group-hover:block z-50">
-                          <div className="bg-gray-900 text-white text-xs rounded py-1 px-2 
+                          <div className="bg-gray-900 text-white text-xs rounded py-2 px-3 
                                         whitespace-nowrap shadow-lg">
-                            {count} contribution{count !== 1 ? 's' : ''} on {dateKey}
+                            <div>{count} contribution{count !== 1 ? 's' : ''} on {dateKey}</div>
+                            {files.length > 0 && (
+                              <div className="mt-1 text-gray-300 text-[10px]">
+                                {files.map((file, i) => (
+                                  <div key={i}>{file}</div>
+                                ))}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
