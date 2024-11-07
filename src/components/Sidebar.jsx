@@ -45,6 +45,7 @@ const FileItem = ({ item, onFileSelect, depth = 0, selectedFile }) => {
 
 const Sidebar = ({ onFileSelect }) => {
   const [files, setFiles] = useState([]);
+  const [expandedFolders, setExpandedFolders] = useState(new Set());
   const [error, setError] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -79,6 +80,58 @@ const Sidebar = ({ onFileSelect }) => {
       // TODO: Implement folder expansion logic if needed
     }
   }, [selectedFile]);
+
+  const toggleFolder = (path) => {
+    setExpandedFolders(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(path)) {
+        newSet.delete(path);
+      } else {
+        newSet.add(path);
+      }
+      return newSet;
+    });
+  };
+
+  // Recursive rendering function
+  const renderItems = (items, level = 0) => {
+    return (
+      <ul className={`pl-${level * 4} space-y-1`}>
+        {items.map((item) => (
+          <li key={item.path} className="relative">
+            {item.isDirectory ? (
+              <div className="flex flex-col">
+                <button
+                  onClick={() => toggleFolder(item.path)}
+                  className="flex items-center py-1 px-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+                >
+                  <span className="mr-2">
+                    {expandedFolders.has(item.path) ? '📂' : '📁'}
+                  </span>
+                  <span className="truncate">{item.name}</span>
+                </button>
+                {expandedFolders.has(item.path) && item.children && (
+                  <div className="ml-4">
+                    {renderItems(item.children, level + 1)}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={() => onFileSelect(item.path)}
+                className="flex items-center py-1 px-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+              >
+                <span className="mr-2">📄</span>
+                <span className="truncate">
+                  {item.name.replace('.md', '')}
+                </span>
+              </button>
+            )}
+          </li>
+        ))}
+      </ul>
+    );
+  };
 
   return (
     <>
