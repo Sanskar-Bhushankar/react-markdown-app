@@ -37,10 +37,11 @@
   transition: background-color 100ms ease-in-out;
 }
 
-/* Add these custom scrollbar styles */
+/* Custom scrollbar styles */
 .custom-scrollbar {
+  overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-width: thin;
-  scrollbar-color: rgb(27, 18, 18) rgb(27, 18, 18);
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -48,22 +49,21 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgb(27, 18, 18);
+  background: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgb(45, 35, 35);
+  background-color: #90EE90;
   border-radius: 4px;
 }
 
-/* Hide scrollbar for main content */
-.hide-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #7BC67B;
 }
 
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari and Opera */
+/* Hide horizontal scrollbar */
+.custom-scrollbar::-webkit-scrollbar-horizontal {
+  display: none;
 }
 
 /* Custom scrollbar for sidebar */
@@ -86,5 +86,21 @@
 
 .sidebar-scroll::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #90EE90 transparent;
+}
+
+/* Hide scrollbar for main content */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }
   
