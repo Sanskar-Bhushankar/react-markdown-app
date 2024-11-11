@@ -62,11 +62,8 @@ const MarkdownPage = ({ markdown }) => {
           // Code block handling
           code({ node, inline, className, children, ...props }) {
             if (!inline && className?.includes('language-')) {
-              const match = /language-(\w+)/.exec(className || '');
-              const language = match ? match[1] : '';
-
               return (
-                <div className="relative group">
+                <div className="relative group overflow-x-auto max-w-full">
                   <button
                     onClick={() => copyToClipboard(String(children))}
                     className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 
@@ -75,24 +72,21 @@ const MarkdownPage = ({ markdown }) => {
                   >
                     Copy
                   </button>
-                  <div className="overflow-x-auto scrollbar-hide">
-                    <SyntaxHighlighter
-                      language={language}
-                      style={vscDarkPlus}
-                      customStyle={{
-                        margin: 0,
-                        borderRadius: '0.5rem',
-                      }}
-                      showLineNumbers={false}
-                      wrapLongLines={false}
-                    >
-                      {String(children).replace(/\n$/, '')}
-                    </SyntaxHighlighter>
-                  </div>
+                  <SyntaxHighlighter
+                    language={className?.replace('language-', '')}
+                    style={vscDarkPlus}
+                    customStyle={{
+                      margin: 0,
+                      borderRadius: '0.5rem',
+                    }}
+                    {...props}
+                  >
+                    {String(children).replace(/\n$/, '')}
+                  </SyntaxHighlighter>
                 </div>
               );
             }
-            return <span className="bg-gray-100 dark:bg-gray-800">{children}</span>;
+            return <code className={className} {...props}>{children}</code>;
           },
 
           // Updated image component to hide width attribute
@@ -134,6 +128,15 @@ const MarkdownPage = ({ markdown }) => {
               return text;
             });
           },
+
+          // Add horizontal scroll for tables
+          table({ node, ...props }) {
+            return (
+              <div className="overflow-x-auto max-w-full">
+                <table {...props} />
+              </div>
+            );
+          }
         }}
         remarkRehypeOptions={{ allowDangerousHtml: true }}
       >

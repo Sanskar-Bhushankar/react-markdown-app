@@ -134,10 +134,10 @@ const Sidebar = ({ onFileSelect }) => {
   };
 
   return (
-    <>
-      <div className="sidebar w-64 bg-gray-100 dark:bg-gray-800 p-4 h-screen overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-white">Files</h2>
+    <aside className="w-64 flex-shrink-0 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 h-full overflow-y-auto">
+      <div className="sticky top-0 p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 z-10">
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Files</h2>
           <button
             onClick={toggleTheme}
             className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white"
@@ -145,43 +145,11 @@ const Sidebar = ({ onFileSelect }) => {
             {isDarkMode ? '🌞' : '🌙'}
           </button>
         </div>
-
-        {/* Search Button */}
-        <button
-          onClick={() => setIsSearchOpen(true)}
-          className="w-full px-3 py-2 mb-4 rounded-lg border border-gray-200 dark:border-gray-600 
-                   bg-white dark:bg-gray-700 
-                   text-gray-500 dark:text-gray-400
-                   hover:bg-gray-50 dark:hover:bg-gray-600
-                   text-left"
-        >
-          Search files...
-        </button>
-
-        {error ? (
-          <div className="text-red-500 p-4">Error: {error}</div>
-        ) : (
-          <ul className="space-y-1">
-            {files.map((item) => (
-              <FileItem 
-                key={item.path} 
-                item={item} 
-                onFileSelect={handleFileSelect}
-                selectedFile={selectedFile}
-                className="text-gray-800 dark:text-white"
-              />
-            ))}
-          </ul>
-        )}
       </div>
-
-      <SearchOverlay
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-        files={files}
-        onFileSelect={handleFileSelect}
-      />
-    </>
+      <nav className="p-4 pb-20">
+        {renderItems(files)}
+      </nav>
+    </aside>
   );
 };
 

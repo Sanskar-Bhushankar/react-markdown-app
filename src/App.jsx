@@ -27,17 +27,18 @@ const App = () => {
 
   return (
     <ThemeProvider>
-      <div className="h-screen flex flex-col overflow-hidden bg-white dark:bg-gray-900">
+      <div className="h-screen flex flex-col bg-white dark:bg-gray-900 overflow-hidden">
         <Navbar 
           onProfileClick={() => setCurrentView('profile')} 
           onHomeClick={() => setCurrentView('main')}
           currentView={currentView}
+          className="flex-shrink-0 h-12"
         />
-        <div className="flex flex-1 overflow-hidden pt-12">
+        <div className="flex flex-1 h-[calc(100vh-48px)] mt-12">
           <Sidebar onFileSelect={handleFileSelect} />
-          <main className="flex-1 flex flex-col overflow-hidden bg-white dark:bg-gray-900">
-            <div className="flex-1 overflow-auto scrollbar-hide">
-              <div className="p-6">
+          <main className="flex-1 relative bg-white dark:bg-gray-900">
+            <div className="absolute inset-0 overflow-y-auto">
+              <div className="p-6 max-w-full">
                 {currentView === 'profile' ? (
                   <Profile />
                 ) : (

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Navbar = ({ onProfileClick, onHomeClick, currentView }) => {
   return (
-    <nav className="h-12 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 flex items-center justify-between px-4 fixed top-0 w-full z-50">
+    <nav className="fixed top-0 left-0 right-0 h-12 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 z-50 flex items-center px-4">
       {/* Left side - Brand */}
       <button 
         onClick={onHomeClick}
