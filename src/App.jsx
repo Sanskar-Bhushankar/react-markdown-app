@@ -11,6 +11,7 @@ const App = () => {
   const [markdownContent, setMarkdownContent] = useState('');
   const [currentFileName, setCurrentFileName] = useState('');
   const [currentView, setCurrentView] = useState('profile');
+  const [currentFile, setCurrentFile] = useState(null);
 
   const handleFileSelect = async (filePath) => {
     try {
@@ -26,6 +27,7 @@ const App = () => {
       setCurrentFileName(formattedPath);
       setMarkdownContent(content);
       setCurrentView('main');
+      setCurrentFile(filePath);
     } catch (error) {
       setMarkdownContent('# Error loading file\n\nFailed to load the selected file.');
       setCurrentFileName('Error');
@@ -42,7 +44,10 @@ const App = () => {
           className="flex-shrink-0 h-12"
         />
         <div className="flex flex-1 h-[calc(100vh-48px)] mt-12">
-          <Sidebar onFileSelect={handleFileSelect} />
+          <Sidebar 
+            onFileSelect={handleFileSelect} 
+            currentFile={currentFile} 
+          />
           <main className="flex-1 relative bg-white dark:bg-gray-900">
             <div className="absolute inset-0 overflow-y-auto hide-scrollbar">
               <div className="p-6 max-w-full">

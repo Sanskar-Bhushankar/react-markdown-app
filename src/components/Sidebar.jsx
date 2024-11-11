@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { sidebarTree } from '../data/sidebarTree.js';
 
-const Sidebar = ({ onFileSelect }) => {
+const Sidebar = ({ onFileSelect, currentFile }) => {
   const [expandedFolders, setExpandedFolders] = useState({});
 
   const toggleFolder = (path) => {
@@ -30,10 +30,16 @@ const Sidebar = ({ onFileSelect }) => {
         );
       }
       
+      const isCurrentFile = currentFile === item.path;
+      
       return (
         <div
           key={item.path}
-          className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded ml-4"
+          className={`flex items-center gap-2 cursor-pointer p-1 rounded ml-4
+            ${isCurrentFile 
+              ? 'bg-green-100 dark:bg-green-900' 
+              : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+            }`}
           onClick={() => onFileSelect(item.path)}
         >
           <span>📄</span>
