@@ -134,7 +134,7 @@ const Sidebar = ({ onFileSelect }) => {
   };
 
   return (
-    <aside className="w-64 flex-shrink-0 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 h-full overflow-y-auto">
+    <aside className="w-64 flex-shrink-0 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 h-full overflow-y-auto sidebar-scroll">
       <div className="sticky top-0 p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 z-10">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white">Files</h2>

@@ -12,19 +12,15 @@ const MarkdownPage = ({ markdown }) => {
     navigator.clipboard.writeText(code);
   };
 
-  // Process the markdown content
   const processMarkdown = (content) => {
-    // First handle images with size
     let processedContent = content.replace(
       /!\[\[(.*?)(?:\s*\|\s*(\d+))?\]\]/g,
       (match, filename, size) => {
         const encodedPath = encodeURIComponent(filename.trim());
-        // Use HTML width attribute instead of style
         return `![${filename}](/pages/images/${encodedPath}){width=${size}}`;
       }
     );
 
-    // Then handle highlighting - must be done after image processing
     processedContent = processedContent.replace(
       /==(.*?)==/g,
       '<mark>$1</mark>'
@@ -59,11 +55,11 @@ const MarkdownPage = ({ markdown }) => {
             </div>
           ),
 
-          // Code block handling
+          // Updated code block with horizontal scroll
           code({ node, inline, className, children, ...props }) {
             if (!inline && className?.includes('language-')) {
               return (
-                <div className="relative group overflow-x-auto max-w-full">
+                <div className="relative group">
                   <button
                     onClick={() => copyToClipboard(String(children))}
                     className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 
@@ -72,17 +68,20 @@ const MarkdownPage = ({ markdown }) => {
                   >
                     Copy
                   </button>
-                  <SyntaxHighlighter
-                    language={className?.replace('language-', '')}
-                    style={vscDarkPlus}
-                    customStyle={{
-                      margin: 0,
-                      borderRadius: '0.5rem',
-                    }}
-                    {...props}
-                  >
-                    {String(children).replace(/\n$/, '')}
-                  </SyntaxHighlighter>
+                  <div className="overflow-x-auto max-w-full scrollbar-hide">
+                    <SyntaxHighlighter
+                      language={className.replace('language-', '')}
+                      style={vscDarkPlus}
+                      customStyle={{
+                        margin: 0,
+                        borderRadius: '0.5rem',
+                      }}
+                      showLineNumbers={false}
+                      wrapLongLines={false}
+                    >
+                      {String(children).replace(/\n$/, '')}
+                    </SyntaxHighlighter>
+                  </div>
                 </div>
               );
             }
@@ -129,16 +128,15 @@ const MarkdownPage = ({ markdown }) => {
             });
           },
 
-          // Add horizontal scroll for tables
+          // Added table component with horizontal scroll
           table({ node, ...props }) {
             return (
-              <div className="overflow-x-auto max-w-full">
+              <div className="overflow-x-auto max-w-full scrollbar-hide">
                 <table {...props} />
               </div>
             );
           }
         }}
-        remarkRehypeOptions={{ allowDangerousHtml: true }}
       >
         {processMarkdown(markdown)}
       </ReactMarkdown>

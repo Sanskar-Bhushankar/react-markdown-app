@@ -87,14 +87,14 @@ const ContributionGraph = () => {
             {months.map(month => (
               <div key={month}>
                 <div className="grid grid-rows-7 grid-flow-col gap-[2px]">
-                  {Array.from({ length: getDaysInMonth(month) }, (_, day) => {
-                    const dateKey = getDateString(month, day);
+                  {Array.from({ length: getDaysInMonth(month) }, (_, i) => {
+                    const dateKey = getDateString(month, i + 1);
                     const count = contributions[dateKey] || 0;
                     const files = fileDetails[dateKey] || [];
                     
                     return (
                       <div
-                        key={day}
+                        key={i}
                         className={`
                           w-[10px] h-[10px] rounded-sm
                           ${getContributionLevel(count)}
