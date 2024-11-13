@@ -142,12 +142,11 @@ const MarkdownPage = ({ markdown }) => {
 
           // Add this new component configuration
           iframe: ({ node, ...props }) => {
-            // Ensure all iframe attributes are passed through
             return (
               <div className="video-wrapper my-4">
                 <iframe
                   {...props}
-                  className="w-full aspect-video rounded-lg"
+                  className="w-full h-[200px] md:h-[315px] rounded-lg"
                   title={props.title || 'Embedded content'}
                 />
               </div>

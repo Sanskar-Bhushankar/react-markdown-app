@@ -8,3 +8,5 @@ rehype-highlight
 gray-matter
 react-syntax-highlighter
 remark-toc
+rehype-raw
+rehype-prism

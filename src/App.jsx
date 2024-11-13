@@ -12,6 +12,7 @@ const App = () => {
   const [currentFileName, setCurrentFileName] = useState('');
   const [currentView, setCurrentView] = useState('profile');
   const [currentFile, setCurrentFile] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleFileSelect = async (filePath) => {
     try {
@@ -34,6 +35,10 @@ const App = () => {
     }
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <ThemeProvider>
       <div className="h-screen flex flex-col bg-white dark:bg-gray-900 overflow-hidden">
@@ -42,21 +47,41 @@ const App = () => {
           onHomeClick={() => setCurrentView('main')}
           currentView={currentView}
           className="flex-shrink-0 h-12"
+          onToggleSidebar={toggleSidebar}
         />
         <div className="flex flex-1 h-[calc(100vh-48px)] mt-12">
-          <Sidebar 
-            onFileSelect={handleFileSelect} 
-            currentFile={currentFile} 
-          />
+          <div className={`
+            fixed md:relative
+            md:block
+            ${isSidebarOpen ? 'block' : 'hidden'}
+            z-50 md:z-auto
+            h-full
+            bg-white dark:bg-gray-900
+            border-r border-gray-200 dark:border-gray-700
+          `}>
+            <Sidebar 
+              onFileSelect={(filePath) => {
+                handleFileSelect(filePath);
+                setIsSidebarOpen(false);
+              }}
+              currentFile={currentFile} 
+            />
+          </div>
+          {isSidebarOpen && (
+            <div 
+              className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+              onClick={() => setIsSidebarOpen(false)}
+            />
+          )}
           <main className="flex-1 relative bg-white dark:bg-gray-900">
             <div className="absolute inset-0 overflow-y-auto hide-scrollbar">
-              <div className="p-6 max-w-full">
+              <div className="p-4 md:p-6 max-w-full">
                 {currentView === 'profile' ? (
                   <Profile />
                 ) : (
                   <>
                     {currentFileName && (
-                      <h1 className="mb-4 text-2xl font-bold text-[#90EE90]">
+                      <h1 className="mb-4 text-xl md:text-2xl font-bold text-[#90EE90]">
                         {currentFileName}
                       </h1>
                     )}
@@ -68,7 +93,11 @@ const App = () => {
               </div>
             </div>
           </main>
-          {currentView !== 'profile' && <TableOfContents markdown={markdownContent} />}
+          {currentView !== 'profile' && (
+            <div className="hidden lg:block">
+              <TableOfContents markdown={markdownContent} />
+            </div>
+          )}
         </div>
       </div>
     </ThemeProvider>
