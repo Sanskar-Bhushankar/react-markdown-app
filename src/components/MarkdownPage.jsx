@@ -32,6 +32,11 @@ const MarkdownPage = ({ markdown }) => {
     return processedContent;
   };
 
+  // Function to process text with double asterisks
+  const processText = (text) => {
+    return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  };
+
   return (
     <div className="prose dark:prose-invert prose-slate max-w-none">
       <ReactMarkdown
@@ -152,6 +157,24 @@ const MarkdownPage = ({ markdown }) => {
               </div>
             );
           },
+
+          // Update the strong component
+          strong: ({node, children}) => {
+            return <span className="font-bold text-white">{children}</span>;
+          },
+
+          // Handle HTML strong tags
+          'strong': ({node, children}) => {
+            return <span className="font-bold text-white">{children}</span>;
+          },
+
+          // Process text nodes
+          text: ({node, children}) => {
+            if (typeof children === 'string') {
+              return <span dangerouslySetInnerHTML={{ __html: processText(children) }} />;
+            }
+            return children;
+          }
         }}
       >
         {processMarkdown(markdown)}

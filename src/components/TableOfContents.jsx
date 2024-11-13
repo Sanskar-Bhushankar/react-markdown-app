@@ -5,15 +5,35 @@ const TableOfContents = ({ markdown }) => {
   const [activeId, setActiveId] = useState('');
 
   useEffect(() => {
-    const extractHeadings = (content) => {
-      const headingRegex = /^(#{1,6})\s+(.+)$/gm;
-      const matches = [...content.matchAll(headingRegex)];
+    const processText = (text) => {
+      return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    };
+
+    const extractHeadings = (markdown) => {
+      const headings = [];
+      const lines = markdown.split('\n');
       
-      return matches.map((match, index) => ({
-        id: `heading-${index}`,
-        level: match[1].length,
-        text: match[2],
-      }));
+      lines.forEach(line => {
+        const match = line.match(/^(#{1,6})\s+(.+)/);
+        if (match) {
+          const level = match[1].length;
+          let text = match[2];
+          
+          text = text.replace(/<strong>(.*?)<\/strong>/g, '$1');
+          text = text.replace(/\*\*(.*?)\*\*/g, '$1');
+          
+          headings.push({
+            level,
+            text,
+            id: text.toLowerCase()
+              .replace(/<[^>]+>/g, '')
+              .replace(/[^\w\s-]/g, '')
+              .replace(/\s+/g, '-')
+          });
+        }
+      });
+      
+      return headings;
     };
 
     setHeadings(extractHeadings(markdown));
