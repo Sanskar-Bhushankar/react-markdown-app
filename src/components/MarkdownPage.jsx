@@ -6,6 +6,9 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import remarkToc from 'remark-toc';
+import rehypePrism from 'rehype-prism';
+import rehypeRaw from 'rehype-raw';
 
 const MarkdownPage = ({ markdown }) => {
   const copyToClipboard = (code) => {
@@ -32,8 +35,8 @@ const MarkdownPage = ({ markdown }) => {
   return (
     <div className="prose dark:prose-invert prose-slate max-w-none">
       <ReactMarkdown
-        remarkPlugins={[remarkGfm, remarkMath]}
-        rehypePlugins={[rehypeKatex]}
+        remarkPlugins={[remarkGfm, remarkMath, remarkToc]}
+        rehypePlugins={[rehypeKatex, rehypePrism, rehypeRaw]}
         components={{
           // Blockquote styling for notes
           blockquote: ({ node, ...props }) => (
@@ -135,7 +138,21 @@ const MarkdownPage = ({ markdown }) => {
                 <table {...props} />
               </div>
             );
-          }
+          },
+
+          // Add this new component configuration
+          iframe: ({ node, ...props }) => {
+            // Ensure all iframe attributes are passed through
+            return (
+              <div className="video-wrapper my-4">
+                <iframe
+                  {...props}
+                  className="w-full aspect-video rounded-lg"
+                  title={props.title || 'Embedded content'}
+                />
+              </div>
+            );
+          },
         }}
       >
         {processMarkdown(markdown)}

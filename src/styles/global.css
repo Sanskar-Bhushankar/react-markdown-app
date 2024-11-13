@@ -1,0 +1,10 @@
+.video-wrapper {
+  position: relative;
+  max-width: 100%;
+  margin: 1.5rem 0;
+}
+
+.video-wrapper iframe {
+  border: none;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+} 

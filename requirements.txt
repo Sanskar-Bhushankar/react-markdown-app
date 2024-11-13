@@ -7,3 +7,4 @@ katex
 rehype-highlight
 gray-matter
 react-syntax-highlighter
+remark-toc

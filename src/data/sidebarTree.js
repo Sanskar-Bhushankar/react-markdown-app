@@ -1,6 +1,11 @@
 // Auto-generated file tree
 export const sidebarTree = [
   {
+    "name": "4. Measure of Central Tendency.md",
+    "path": "4. Measure of Central Tendency.md",
+    "type": "file"
+  },
+  {
     "name": "GIT Tutorial to copy branch.md",
     "path": "GIT Tutorial to copy branch.md",
     "type": "file"
@@ -53,8 +58,18 @@ export const sidebarTree = [
         "type": "file"
       },
       {
+        "name": "1. Statistics.md",
+        "path": "Statistics for Data Science\\1. Statistics.md",
+        "type": "file"
+      },
+      {
         "name": "1.Quantiles, Percentiles, Box Plot.md",
         "path": "Statistics for Data Science\\1.Quantiles, Percentiles, Box Plot.md",
+        "type": "file"
+      },
+      {
+        "name": "2. Population vs. Sample.md",
+        "path": "Statistics for Data Science\\2. Population vs. Sample.md",
         "type": "file"
       },
       {
