@@ -13,6 +13,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.15",
     "d3": "^7.9.0",
+    "d3-force": "^3.0.0",
     "gray-matter": "^4.0.3",
     "katex": "^0.16.11",
     "mathjax": "^3.2.2",
