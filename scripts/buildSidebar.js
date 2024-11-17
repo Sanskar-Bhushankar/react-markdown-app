@@ -11,17 +11,9 @@ async function buildSidebarTree() {
   const outputDir = path.join(dirname(__dirname), 'src', 'data');
 
   try {
-    console.log('Starting sidebar tree generation...');
-    console.log('Pages directory:', pagesDir);
-    console.log('Output directory:', outputDir);
-
-    // Create data directory if it doesn't exist
     await fs.mkdir(outputDir, { recursive: true });
-
-    // Get the file tree structure
     const tree = await getFileTree(pagesDir);
-
-    // Write as a JavaScript module
+    
     const fileContent = `// Auto-generated file tree
 export const sidebarTree = ${JSON.stringify(tree, null, 2)};`;
 
