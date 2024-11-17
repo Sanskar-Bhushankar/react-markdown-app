@@ -6,6 +6,7 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import rehypeRaw from 'rehype-raw';
 
 const MarkdownPage = ({ markdown }) => {
   const copyToClipboard = (code) => {
@@ -30,10 +31,10 @@ const MarkdownPage = ({ markdown }) => {
   };
 
   return (
-    <div className="prose dark:prose-invert prose-slate max-w-none">
+    <div className="prose dark:prose-invert prose-slate max-w-none p-8">
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
-        rehypePlugins={[rehypeKatex]}
+        rehypePlugins={[rehypeKatex, rehypeRaw]}
         components={{
           // Blockquote styling for notes
           blockquote: ({ node, ...props }) => (
@@ -133,6 +134,19 @@ const MarkdownPage = ({ markdown }) => {
             return (
               <div className="overflow-x-auto max-w-full scrollbar-hide">
                 <table {...props} />
+              </div>
+            );
+          },
+
+          // Add only the new iframe component
+          iframe({ node, ...props }) {
+            return (
+              <div className="video-container my-4">
+                <iframe
+                  {...props}
+                  className="w-full aspect-video rounded-lg"
+                  style={{ maxWidth: '600px', margin: '0 auto' }}
+                />
               </div>
             );
           }

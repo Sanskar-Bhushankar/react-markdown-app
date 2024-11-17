@@ -34,4 +34,17 @@ body {
 .file-active {
   @apply bg-gray-800 border-l-2 border-[#90EE90];
 }
+
+/* Add only these new styles for iframe */
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.video-container iframe {
+  border: none;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
   
