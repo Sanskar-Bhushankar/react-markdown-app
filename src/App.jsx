@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Profile from './pages/Profile';
 import MarkdownPage from './components/MarkdownPage';
+import GraphView from './components/GraphView';
 
 const MarkdownViewer = () => {
   const { '*': filePath } = useParams();
@@ -51,6 +52,7 @@ const MarkdownViewer = () => {
     <div className="p-6">
       {breadcrumb}
       <MarkdownPage markdown={markdownContent} />
+      <GraphView />
     </div>
   );
 };
